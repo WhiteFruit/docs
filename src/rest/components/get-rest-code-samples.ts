@@ -82,13 +82,15 @@ export function getShellExample(operation: Operation, codeSample: CodeSample) {
     apiVersionHeader =
       allVersions[currentVersion].apiVersions.length > 0 &&
       allVersions[currentVersion].latestApiVersion
-        ? `\\\n  -H "X-GitHub-Api-Version: ${allVersions[currentVersion].latestApiVersion}"`
+        ? `-H "X-GitHub-Api-Version: ${allVersions[currentVersion].latestApiVersion}"`
         : ''
   }
 
   const args = [
     operation.verb !== 'get' && `-X ${operation.verb.toUpperCase()}`,
-    `-H "Accept: ${defaultAcceptHeader}" \\\n  ${authHeader} ${apiVersionHeader}`,
+    `-H "Accept: ${defaultAcceptHeader}"`,
+    authHeader,
+    apiVersionHeader,
     contentTypeHeader,
     `${operation.serverUrl}${requestPath}`,
     requestBodyParams,
